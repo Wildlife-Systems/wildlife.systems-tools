@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp ws-node-add /usr/bin
+cp ws-node-remove /usr/bin
