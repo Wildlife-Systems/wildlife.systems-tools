@@ -5,10 +5,22 @@ Administration tools for the [wildlife.systems](https://wildlife.systems) webser
 
 Clone repo and run ./install
 
-## Node creation
+## Node management
 
-ws-node-add node_id
+### Node creation
 
-## Node removal
+ws-node-add <node_id>
 
-ws-node-remove node_id
+### Node removal
+
+ws-node-remove <node_id>
+
+## Project management
+
+### Project creation
+
+ws-project-add <project_name>
+
+### Project deletion
+
+ws-project-remove <project_name>
