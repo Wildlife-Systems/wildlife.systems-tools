@@ -9,3 +9,4 @@
 cp ws-node-add /usr/bin
 cp ws-node-remove /usr/bin
 cp ws-project-add /usr/bin
+cp ws-project-remove /usr/bin

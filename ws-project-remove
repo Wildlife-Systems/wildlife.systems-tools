@@ -1,0 +1,41 @@
+#!/bin/php
+
+<?php
+
+# WildlifeSystems
+#
+# This script is part of the WildlifeSystems project. For further information
+# please refer to https://docs.wildlife.systems, or for more information on
+# the project itself, please refer to https://wildlife.systems.
+
+#Include database file in user's home directory
+$home = getenv("HOME");
+if (!file_exists($home."/.ws-db.php")) {
+  print(".ws-db.php does not exist.\nSee https://github.com/Wildlife-Systems/wildlife.systems-tools/wiki/.ws-db.php-does-not-exist\n\n");
+  exit(1);
+}
+include($home."/.ws-db.php");
+
+
+$mode = null;
+if (!isset($argv[1]) || in_array($argv[1], array("help", "-h"))) {
+  $mode = "help";
+}
+
+switch($mode) {
+  case "help":
+    print("Usage:\n");
+    print("  ws-project-remove <project_name>\n");
+    print("\n");
+    break;
+  default:
+    $sql = "DELETE FROM `projects` WHERE `name`='"
+         . $db->real_escape_string($argv[1])
+         . "';";
+    if (!$result = $db->query($sql)) {
+      print("Add project failed.\n\n");
+      exit(2);
+    } else {
+      exit(0);
+    }
+}
