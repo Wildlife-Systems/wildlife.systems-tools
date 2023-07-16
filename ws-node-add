@@ -25,7 +25,7 @@ if (!isset($argv[1]) || in_array($argv[1], array("help", "-h"))) {
 switch($mode) {
   case "help":
     print("Usage:\n");
-    print("  ws-node-add node_id\n");
+    print("  ws-node-add <node_id>\n");
     print("\n");
     break;
   default:
