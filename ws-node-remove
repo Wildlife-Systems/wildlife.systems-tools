@@ -29,11 +29,40 @@ switch($mode) {
     print("\n");
     break;
   default:
+    #Check is last update was within a week
+    $sql = "SELECT `node_id`, `timestamp` FROM `heartbeats` WHERE `node_id` ='"
+         . $db->real_escape_string($argv[1])
+         . "';";
+    if (!$result = $db->query($sql)) {
+      print("Query failed.\n\n");
+      exit(60);
+    }
+    if ($result->num_rows == 0) {
+      print("Node does not exist.\n\n");
+      exit(10);
+    }
+    $data = $result->fetch_assoc();
+    $last_timestamp = $data['timestamp'];
+    $diff = time() - $last_timestamp;
+    if  ($diff < 60*60*24*7) {
+      print("Node last updated less than a week ago.\n\n");
+      # Prompt user to confirm
+      print("Are you sure you want to remove this node? [y/N] ");
+      $handle = fopen ("php://stdin","r");
+      $line = fgets($handle);
+      if(trim($line) != 'y'){
+        print("Aborted.\n\n");
+        exit(0);
+      }
+    }
+    $result->close();
+
     $sql = "DELETE FROM `nodes` WHERE `node_id` ='"
          . $db->real_escape_string($argv[1])
          . "';";
     if (!$result = $db->query($sql)) {
       print("Remove node failed.\n\n");
       exit(2);
-    } 
+    }
+    $result->close();
 }
